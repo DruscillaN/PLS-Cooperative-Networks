@@ -17,8 +17,8 @@ Omega_RE = d_RE^(-alpha_pl);
 SNR_dB_fixed = 10;
 SNR_lin_fixed = 10^(SNR_dB_fixed/10);
 
-% Secrecy Rate sweep
-Rs_vec = 0:0.05:4.0;   % bits/s/Hz
+% Secrecy Rate 
+Rs_vec = 0:0.05:3.0;   
 
 % Numerical Integration Settings
 y_max   = 1e4;
@@ -41,9 +41,9 @@ colors_s2  = lines(length(M_scheme2));
 legendentries = {};
 allEST = [];
 
-% =========================================================
+
 % SCHEME 1: ZFB
-% =========================================================
+
 fprintf('=== Scheme 1: ZFB ===\n');
 for m_idx = 1:length(M_scheme1)
     M   = M_scheme1(m_idx);
@@ -65,7 +65,7 @@ for m_idx = 1:length(M_scheme1)
         lam_RB = 1 / g_RB;
         mu     = g_RE / g_AE;
 
-        % Eavesdropper PDF - ZFB Scheme 1 (unchanged)
+        % Eavesdropper PDF - ZFB 
         f_E = @(y) (lam_AE*(M-1)*mu .* exp(-lam_AE*y) ./ (1 + mu*y).^M) + ...
                    (lam_AE           .* exp(-lam_AE*y) ./ (1 + mu*y).^(M-1));
 
@@ -116,9 +116,9 @@ for m_idx = 1:length(M_scheme1)
     legendentries{end+1} = sprintf('ZFB, M = %d', M);
 end
 
-% =========================================================
+
 % NAN SCHEME
-% =========================================================
+
 fprintf('\n=== NAN Scheme ===\n');
 for m_idx = 1:length(M_scheme2)
     M   = M_scheme2(m_idx);
@@ -142,7 +142,7 @@ for m_idx = 1:length(M_scheme2)
         lam_AR = 1 / g_AR;
         lam_RB = 1 / g_RB;
 
-        % Eavesdropper PDF - NAN Scheme (unchanged)
+        % Eavesdropper PDF - NAN 
         f_E = @(y) (lam_AE ./ (1 + beta.*y).^(M-1) + ...
                     alpha .* lam_AE .* y ./ (1 + beta.*y).^M) .* exp(-lam_AE.*y);
 
@@ -191,9 +191,7 @@ for m_idx = 1:length(M_scheme2)
     legendentries{end+1} = sprintf('NAN, M = %d', M);
 end
 
-% =========================================================
-% Formatting
-% =========================================================
+
 grid on; grid minor;
 xlabel('Secrecy Rate R_s (bits/s/Hz)', 'FontSize', 12);
 ylabel('Effective Secrecy Throughput (EST)', 'FontSize', 12);
