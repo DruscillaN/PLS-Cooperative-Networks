@@ -16,7 +16,6 @@ Omega_RB = d_RB^(-alpha_pl);
 Omega_AE = d_AE^(-alpha_pl);
 Omega_RE = d_RE^(-alpha_pl);
 
-% Sweep Range for Secrecy Rate Rs (bits/s/Hz)
 Rs_vec = 0.1:0.5:2.6;
 
 
@@ -42,7 +41,6 @@ lam_AR = 1 / g_AR;
 lam_RB = 1 / g_RB;
 mu     = g_RE / g_AE;
 
-% Pre-allocate SOP storage matrices
 SOP_ZFB_all = zeros(length(M_list), length(Rs_vec));
 SOP_NAN_all = zeros(length(M_list), length(Rs_vec));
 
@@ -96,7 +94,7 @@ SOP_ZFB_M2 = SOP_ZFB_all(1, :);
 SOP_ZFB_M3 = SOP_ZFB_all(2, :);
 SOP_ZFB_M5 = SOP_ZFB_all(3, :);
 
-%% 3. SCHEME 2: NAN (Eq. 25) vs Rs
+
 fprintf('\n=== Scheme 2 (NAN) vs Rs ===\n');
 for m_idx = 1:length(M_list)
     M   = M_list(m_idx);
@@ -143,12 +141,10 @@ for m_idx = 1:length(M_list)
     legendentries{end+1} = sprintf('NAN, M = %d', M); %#ok<SAGROW>
 end
 
-% Extract named per-M NAN results
 SOP_NAN_M2 = SOP_NAN_all(1, :);
 SOP_NAN_M3 = SOP_NAN_all(2, :);
 SOP_NAN_M5 = SOP_NAN_all(3, :);
 
-%% 4. Formatting
 grid on; grid minor;
 xlabel('Target Secrecy Rate R_s (bits/s/Hz)', 'FontSize', 12);
 ylabel('Secrecy Outage Probability (SOP)', 'FontSize', 12);
@@ -164,7 +160,7 @@ ylim([1e-7 1.1]);
 hold off;
 fprintf('\nPlotting Complete. X-axis represents Rs.\n');
 
-%% 5. Save all variables to slot30.mat
+
 save('slot30.mat', ...
     'SNR_fixed_dB', 'SNR_fixed_lin', ...
     'alpha_pl', ...
