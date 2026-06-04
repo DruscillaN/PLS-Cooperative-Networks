@@ -41,9 +41,9 @@ colors_s2  = lines(length(M_scheme2));
 legendentries = {};
 allSOP = [];
 
-% =========================================================
+
 % SCHEME 1: ZFB
-% =========================================================
+
 fprintf('=== Scheme 1 (ZFB) ===\n');
 for m_idx = 1:length(M_scheme1)
     M   = M_scheme1(m_idx);
@@ -106,9 +106,9 @@ for m_idx = 1:length(M_scheme1)
     legendentries{end+1} = sprintf('Scheme 1 (ZFB), M = %d', M);
 end
 
-% =========================================================
+
 % SCHEME 2: NAN
-% =========================================================
+
 fprintf('\n=== NAN Scheme ===\n');
 for m_idx = 1:length(M_scheme2)
     M   = M_scheme2(m_idx);
@@ -128,14 +128,14 @@ for m_idx = 1:length(M_scheme2)
         lam_AR = 1/g_AR;
         lam_RB = 1/g_RB;
 
-        % Eavesdropper PDF - NAN Scheme (UNCHANGED)
+        % Eavesdropper PDF - NAN Scheme 
         f_E = @(y) (lam_AE ./ (1 + beta.*y).^(M-1) + ...
                     alpha .* lam_AE .* y ./ (1 + beta.*y).^M) .* exp(-lam_AE.*y);
 
-        % T1 (UNCHANGED)
+        % T1 
         T1 = integral(f_E, 0, Inf);
 
-        % T2 (UNCHANGED)
+        % T2 
         T2 = 0;
         for k = 0:M-1
             integrand_T2 = @(y) ((lam_AR*(A + B.*y)).^k ./ factorial(k)) .* ...
@@ -143,7 +143,7 @@ for m_idx = 1:length(M_scheme2)
             T2 = T2 - integral(integrand_T2, 0, Inf);
         end
 
-        % T3 (UNCHANGED)
+        % T3 
         T3 = 0;
         for j = 1:M
             coeff_j      = nchoosek(M,j) * (-1)^j;
@@ -151,7 +151,7 @@ for m_idx = 1:length(M_scheme2)
             T3           = T3 + integral(integrand_T3, 0, Inf);
         end
 
-        % T4 (UNCHANGED)
+        % T4 
         T4 = 0;
         for j = 1:M
             for k = 0:M-1
@@ -174,9 +174,6 @@ for m_idx = 1:length(M_scheme2)
     legendentries{end+1} = sprintf('NAN, M = %d', M);
 end
 
-% =========================================================
-% Formatting
-% =========================================================
 grid on; grid minor;
 xlabel('Average SNR_{AR} (dB)', 'FontSize', 12);
 ylabel('Secrecy Outage Probability (SOP)', 'FontSize', 12);
