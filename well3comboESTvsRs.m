@@ -2,7 +2,7 @@ clear;
 clc; 
 close all;
 
-%% Parameters
+
 M_array  = [2, 3, 5];
 Rs_array = 0:0.2:4;   % Secrecy rate range (bps/Hz) — 8 points
 SNR_dB   = 20;
@@ -22,11 +22,11 @@ fprintf('SNR = %d dB | alpha = %.1f\n', SNR_dB, alpha);
 fprintf('d_SR=%.1f | d_SE=%.1f | d_RE=%.1f\n', d_SR, d_SE, d_RE);
 fprintf('gamma_SR=%.4f | gamma_SE=%.4f | gamma_RE=%.4f\n\n', gamma_SR, gamma_SE, gamma_RE);
 
-%% Pre-allocate Storage
+
 ST_ZFB_all = zeros(length(M_array), length(Rs_array));
 ST_NAN_all = zeros(length(M_array), length(Rs_array));
 
-%% Figure Setup
+
 colors = lines(length(M_array));
 figure('Color','w','Position',[100 100 820 600]);
 hold on;
@@ -34,7 +34,7 @@ grid on;
 
 fprintf('Computing Secrecy Throughput vs Rs...\n');
 
-%% Main Loop over M
+
 for mm = 1:length(M_array)
     M = M_array(mm);
     ST_ZFB = zeros(size(Rs_array));
@@ -72,13 +72,13 @@ for mm = 1:length(M_array)
         ST_NAN(ri) = (1 - SOP_NAN) * Rs;
     end
 
-    %% Store results
+  
     ST_ZFB_all(mm, :) = ST_ZFB;
     ST_NAN_all(mm, :) = ST_NAN;
 
     fprintf('M=%d | ST_ZFB max=%.4f | ST_NAN max=%.4f\n', M, max(ST_ZFB), max(ST_NAN));
 
-    %% Plot curves
+ 
     plot(Rs_array, ST_ZFB, '-o', 'Color', colors(mm,:), 'LineWidth', 2, ...
         'MarkerSize', 7, 'MarkerFaceColor', 'w', 'MarkerEdgeColor', colors(mm,:), ...
         'DisplayName', sprintf('ZFB (M=%d)', M));
